@@ -4,6 +4,7 @@ import {
   Route,
 } from "react-router-dom";
 import Home from "./pages/Home";
+import Lender from "./pages/Lender";
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home />}/>
+            <Route path="/lender" element={<Lender />}/>
         </Routes>
       </BrowserRouter>
     </div>
