@@ -1,48 +1,42 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+// import { fetchNFTs } from "../../../server/api";
+import axios from 'axios'
 
 const NFTList = ({ address }) => {
     const [nfts, setNfts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
   
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get('/fetchNfts', {
+          // Replace 'YOUR_SERVER_URL' with the actual URL of your server
+          const response = await axios.get('http://localhost:5000/fetchNfts', {
             params: {
-              address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045', // or use the actual address
-              limit: 50,
-              offset: 0,
-              chainIds: 1,
-            },
-            headers: {
-              Authorization: 'Bearer EoVAhHv1f701P3UsnBQa80UNBEgReFL9',
+              // Add any query parameters if needed
             },
           });
   
-          // Update the state with the fetched NFTs
-          setNfts(response.data);
-          console.log(response.data);
-          setLoading(false);
+          // Assuming the response.data is an array of NFTs
+          console.log(response.data)
+          setNfts(response.data.assets);
         } catch (error) {
-          console.error('Axios Error: ', error);
-          // Handle error, set an error state, show a message, etc.
+          console.error('Error fetching NFTs:', error);
+          setError('Failed to fetch NFTs');
         }
       };
   
       fetchData();
-  }, [address]);
+    }, []);
 
   return (
     <div className="Nft-list">
-      {Object.keys(nfts).map((nft) => (
+      {nfts.map((nft) => (
         <div key={nft.id}>
           <img src={nft.image_url} alt={nft.name} width="150" />
           <h2>{nft.name}</h2>
           <p>{nft.description}</p>
         </div>
       ))}
-      
     </div>
   );
 };

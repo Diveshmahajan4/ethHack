@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
@@ -10,27 +10,4 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
-  function (config) {
-    if (config.TYPE.params) {
-      config.params = config.TYPE.params;
-    } else if (config.TYPE.query) {
-      config.url = config.url + "/" + config.TYPE.query;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
-
-axiosInstance.interceptors.response.use(
-  function (response) {
-    // Stop global loader here
-    return processResponse(response);
-  },
-  function (error) {
-    // Stop global loader here
-    return Promise.reject(ProcessError(error));
-  }
-);
+const fetchNfts = axios.get(API_URL + "/");

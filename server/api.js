@@ -13,9 +13,9 @@ app.use(cors()); // To handle CORS issues when making requests to the front end
 app.use(express.static(path.join(__dirname, "nft-collection/build")));
 
 // We will route all other requests to the nft-collection build
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "nft-collection/build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.send("Hello");
+// });
 
 app.get("/fetchNfts", async (req, res) => {
   const address =
