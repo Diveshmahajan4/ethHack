@@ -7,7 +7,7 @@ const DashBoard = () => {
   return (
     <div className="flex flex-col max-w-sm col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
         <div>
-            <img src={Monkey} alt="#" />
+            <img src={Monkey} alt="#" className='w-full h-full object-cover'/>
         </div>
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">

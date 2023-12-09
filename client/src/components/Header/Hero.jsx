@@ -1,6 +1,16 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 
 const Hero = () => {
+    const navigate = useNavigate();
+
+  const handleButtonClickBorrow = () => {
+    navigate('/borrow');
+  };
+
+  const handleButtonClickLend = () => {
+    navigate('/lend');
+  };
   return (
     <div className='flex flex-col items-center align-center'>
         <h1 className='pt-12 ml-72 mr-72 mt-4 text-4xl text-center text-black font-bold'>
@@ -11,10 +21,10 @@ const Hero = () => {
         </h3>
 
         <div className='flex justify-center items-center gap-8'>
-        <button type="button" class="m-4 mt-10 py-6 p-16 inline-flex items-center gap-x-2 text-xl font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none ">
+        <button type="button" onClick={handleButtonClickBorrow} class="m-4 mt-10 py-6 p-16 inline-flex items-center gap-x-2 text-xl font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none ">
                 Borrow
         </button>
-        <button type="button" class="m-4 mt-10 py-6 p-16 inline-flex items-center gap-x-2 text-xl font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none ">
+        <button type="button" onClick={handleButtonClickLend} class="m-4 mt-10 py-6 p-16 inline-flex items-center gap-x-2 text-xl font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none ">
                 Lend
         </button>
         </div>

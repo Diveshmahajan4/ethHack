@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Lender from "./pages/Lender";
+import Borrower from "./pages/Borrower";
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home />}/>
-            <Route path="/lender" element={<Lender />}/>
+            <Route path="/lend" element={<Lender />}/>
+            <Route path="/borrow" element={<Borrower />}/>
         </Routes>
       </BrowserRouter>
     </div>
