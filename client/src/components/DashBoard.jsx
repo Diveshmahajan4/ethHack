@@ -2,20 +2,20 @@ import React from 'react'
 import Web3 from 'web3';
 import Select from '../assets/tick.png'
 import Monkey from '../assets/monkey.png'
-
+// import { ContractABI } from "./EscrowLoan.json";
+// import "@openzeppelin/contracts/token/ERC721/IERC721.sol"
 const DashBoard = () => {
 
   const handleTransferFunds = async () => {
     if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
+      const web3 = new Web3('0x87a3ac66ca5C9Ef5463ca604b38F6FAF81A0D59D');
       try {
         await window.ethereum.request({ method: 'eth_requestAccounts' });
         const accounts = await web3.eth.getAccounts();
         const loanId = 1; // Replace with the actual loan ID you want to fund
         const amountToSend = web3.utils.toWei('1', 'ether'); // Replace '1' with the amount you want to send
-
         const contractAddress = '0x87a3ac66ca5C9Ef5463ca604b38F6FAF81A0D59D'; // Replace with your contract address
-        const contractABI = [
+        const ContractABI = [
           // ... Your contract ABI here
           {
             "constant": false,
@@ -33,9 +33,7 @@ const DashBoard = () => {
           },
           // ... Other ABI entries
         ];
-
-        const contract = new web3.eth.Contract(contractABI, contractAddress);
-
+        const contract = new web3.eth.Contract(ContractABI, contractAddress);
         // Call the contract function to fund the loan
         const result = await contract.methods.fundLoan(loanId).send({
           from: accounts[0],
@@ -43,13 +41,13 @@ const DashBoard = () => {
         });
 
         console.log('Transaction successful:', result);
-        alert('Funds transferred successfully!');
+        console.log('Funds transferred successfully!');
       } catch (error) {
-        console.error('Error transferring funds:', error);
-        alert('Error transferring funds. Please check the console for details.');
+        console.log('Error transferring funds:', error);
+        console.log('Error transferring funds. Please check the console for details.');
       }
     } else {
-      alert('MetaMask not detected. Please install MetaMask and try again.');
+      console.log('MetaMask not detected. Please install MetaMask and try again.');
     }
   };
 
