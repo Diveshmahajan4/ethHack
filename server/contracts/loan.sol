@@ -1,5 +1,6 @@
 pragma solidity ^0.8.0;
 
+import "abdk-libraries-solidity/ABDKMath64x64.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract EscrowLoan {
@@ -159,4 +160,61 @@ contract EscrowLoan {
 
         emit LoanCancelled(_loanId);
     }
+    function repayLoan(uint256 _loanId, uint256 _amount) external payable onlyBorrower(_loanId) {
+        Loan storage loan = loans[_loanId];
+        require(loan.status == LoanStatus.Funded || loan.status == LoanStatus.Repayment, "Loan not in repayment phase");
+        require(loan.loanCompleteTime >= block.timestamp, "Can't repay an expired loan");
+
+        uint256 totalInterest = calculateTotalInterest(_loanId, 0);
+        uint256 additionalCapital = loan.loanAmountDrawn + totalInterest;
+        require(msg.value >= additionalCapital, "Insufficient repayment");
+
+        if (loan.status == LoanStatus.Funded) {
+            loan.status = LoanStatus.Repayment;
+        }
+
+        require(block.timestamp <= loan.lastInstallmentTime + loan.installmentPeriod, "Late installment");
+
+        require(msg.value >= _amount, "Insufficient installment payment");
+
+        loan.loanAmountDrawn += _amount;
+        loan.lastInstallmentTime = block.timestamp;
+
+        emit LoanRepayment(_loanId, _amount);
+
+        if (loan.loanAmountDrawn >= loan.loanAmount) {
+            loan.status = LoanStatus.Complete;
+            emit LoanComplete(_loanId);
+        }
+    }
+
+    function calculateTotalInterest(uint256 _loanId, uint256 _future) public view returns (uint256) {
+        Loan memory loan = loans[_loanId];
+        uint256 secondsAsTopBid = block.timestamp + _future - loan.loanCompleteTime;
+        uint256 secondsSinceFirstBid = loan.loanCompleteTime - loan.loanCompleteTime;
+        int128 durationAsTopBid = ABDKMath64x64.divu(secondsAsTopBid, secondsSinceFirstBid);
+        int128 interestRate = ABDKMath64x64.divu(loan.interestRate, 100);
+        uint256 maxInterest = ABDKMath64x64.mulu(interestRate, loan.loanAmount);
+        return ABDKMath64x64.mulu(durationAsTopBid, maxInterest);
+    }
+
+    function cancelLoan(uint256 _loanId) external onlyBorrower(_loanId) {
+        Loan storage loan = loans[_loanId];
+        require(loan.status == LoanStatus.Open, "Can't cancel a loan with >0 bids");
+
+        IERC721(loan.tokenAddress).transferFrom(address(this), loan.borrower, loan.tokenId);
+
+        loan.status = LoanStatus.Complete;
+
+        emit LoanCancelled(_loanId);
+    }
+
+    function seizeNFT(uint256 _loanId) external onlyLender(_loanId) onlyDefaultedLoan(_loanId) {
+        Loan memory loan = loans[_loanId];
+        require(loan.loanCompleteTime < block.timestamp, "Can't seize before expiry");
+
+        IERC721(loan.tokenAddress).transferFrom(address(this), loan.lender, loan.tokenId);
+
+        emit NFTSeized(_loanId, loan.lender, msg.sender);
+    }
 }
