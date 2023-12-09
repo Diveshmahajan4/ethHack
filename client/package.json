@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.5",
+    "@moralisweb3/common-evm-utils": "^2.23.2",
+    "@safe-global/auth-kit": "^2.0.0",
+    "@web3auth/safeauth-embed": "^0.0.0",
     "axios": "^1.6.2",
     "cors": "^2.8.5",
+    "moralis": "^2.23.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1"
