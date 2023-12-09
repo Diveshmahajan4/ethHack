@@ -27,7 +27,7 @@ const NFTList = () => {
           console.log(response.data)
           setNfts(response.data.assets);
         } catch (error) {
-          console.error('Error fetching NFTs:', error);
+          // /console.error('Error fetching NFTs:', error);
           setError('Failed to fetch NFTs');
         }
       };
