@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, "nft-collection/build")));
 app.get("/fetchNfts", async (req, res) => {
   const address =
     req.query.address || "0xd8da6bf26964af9d7eed9e03e53415d37aa96045";
-  const limit = req.query.limit || 50;
+  const limit = req.query.limit || 10;
   const offset = req.query.offset || 0;
   const chainIds = req.query.chainIds || 1;
 
