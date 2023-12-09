@@ -5,7 +5,7 @@ import Moralis from 'moralis';
 import Select from '../assets/tick.png'
 import { useNavigate } from "react-router-dom";
 
-const NFTList = ({  }) => {
+const NFTList = () => {
     const [nfts, setNfts] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
