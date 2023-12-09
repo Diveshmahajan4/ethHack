@@ -2,13 +2,11 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const path = require("path");
-
 const app = express();
-const PORT = 5000;
+const PORT = 5100;
 const BASE_URL = "https://api.1inch.dev/nft/v1/byaddress";
 
 app.use(cors()); // To handle CORS issues when making requests to the front end
-
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "nft-collection/build")));
 
@@ -29,7 +27,7 @@ app.get("/fetchNfts", async (req, res) => {
 
     const response = await axios.get(constructedUrl, {
       headers: {
-        Authorization: `Bearer EoVAhHv1f701P3UsnBQa80UNBEgReFL9`,
+        Authorization: `Bearer dGUMIdUTjagliyJOiJ8K269oA6rjbfkp`,
       },
     });
 
