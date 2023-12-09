@@ -75,7 +75,7 @@ const DashBoard = () => {
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={handleTransferFunds}
                 >
-            view
+            View
           </button>
           <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full"></div>
         </div>
