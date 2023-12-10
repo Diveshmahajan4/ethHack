@@ -14,7 +14,7 @@ const Hero = () => {
   return (
     <div className='flex flex-col items-center align-center'>
         <h1 className='pt-12 ml-72 mr-72 mt-4 text-4xl text-center text-black font-bold'>
-        <p className='text-purple-600'>CryptoCanvas</p> Empowering NFT Owners through On-Chain Collateral Lending
+        <p className='text-purple-600'>Creditsco</p> Empowering NFT Owners through On-Chain Collateral Lending
         </h1>
         <h3 className='pt-10 ml-64 mr-64 text-lg text-center font-semibold text-gray-500'>
         Unlock the Value of Your NFT Portfolio, Secure On-Chain Loans with CryptoCanvas, Where Your Digital Assets Become Financial Opportunities.

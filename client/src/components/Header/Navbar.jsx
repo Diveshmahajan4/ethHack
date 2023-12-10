@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Logo from '../../assets/logo.png'
 
 const Navbar = () => {
 
@@ -28,7 +29,8 @@ const Navbar = () => {
     <header>
         <nav className='flex justify-between pl-24 pr-24 bg-sky-100 h-16'>
             <div>
-                <p className='m-4 p-2 display-flex items-center text-2xl font-bold text-purple-700'>CryptoCanvas</p>
+                {/* <p className='m-4 p-2 display-flex items-center text-2xl font-bold text-purple-700'>CryptoCanvas</p> */}
+                <img src={Logo} alt="logo"  className='w-40 h-10 mt-4'/>
             </div>
             <div>
             {isLogin === false ? 

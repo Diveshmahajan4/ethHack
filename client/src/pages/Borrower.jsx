@@ -5,8 +5,7 @@ import Navbar from '../components/Header/Navbar'
 
 const Borrower = () => {
   return (
-    <div className="flex flex-wrap gap-4 ">
-        <Navbar/>
+    <div className="flex flex-wrap gap-4 ml-12">
         <h1 className='m-12 mt-24 text-3xl font-semibold underline'>Your NFTs</h1>
         <div>
             <NFTList/>
