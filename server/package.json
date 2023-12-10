@@ -14,6 +14,7 @@
     "@nomiclabs/hardhat-solhint": "^3.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.6",
     "@openzeppelin/contracts": "^5.0.1",
+    "@pushprotocol/restapi": "^1.4.45",
     "abdk-libraries-solidity": "^3.2.0",
     "axios": "^1.6.2",
     "chai": "^4.3.10",
@@ -24,6 +25,7 @@
     "hardhat-abi-exporter": "^2.10.1",
     "hardhat-gas-reporter": "^1.0.9",
     "mocha": "^10.2.0",
+    "mongoose": "^8.0.3",
     "nodemon": "^3.0.2",
     "openzeppelin-solidity": "^2.2.0"
   }

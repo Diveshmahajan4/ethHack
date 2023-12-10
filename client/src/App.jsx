@@ -8,6 +8,8 @@ import Lender from "./pages/Lender";
 import Borrower from "./pages/Borrower";
 import { ThemeProvider } from "@material-tailwind/react";
 import Form from "./components/Form";
+import Push from "../utils/Push";
+import Table from "./components/Table";
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
             <Route path="/lend" element={<Lender />}/>
             <Route path="/borrow" element={<Borrower/>}/>
             <Route path="/form" element={<Form />}/>
+            <Route path="/transactions" element={<Table />}/>
+            {/* <Route path="/push" element={<Push />}/> */}
         </Routes>
       </BrowserRouter>
     </div>

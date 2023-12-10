@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import lighthouse from '@lighthouse-web3/sdk'
 import Web3 from 'web3';
 // import Web3 from 'web3';
 // import EscrowLoanContract from '/Users/manas/Desktop/ethHack/server/artifacts/contracts/loan.sol/EscrowLoan.json'; // Import the JSON ABI of your smart contract
@@ -104,14 +105,49 @@ const Form = () => {
   //   return number / 2;
   // };
 
-  const handleFormSubmit =  (e) => {
+  const apiKey = '4c361584.906b4ca78031415aba23651ecc6fa233';
+  const hashId =  '0xd8da6bf26964af9d7eed9e03e53415d37aa96045';
+
+  async function addItem() {
+
+    try {
+      await axios.post('http://localhost:5000/add', { hashId });
+      alert('Item added successfully!');
+    } catch (error) {
+      console.error('Error adding item:', error.message);
+      alert('Failed to add item. Please try again.');
+    }
+  }
+
+
+  const  handleFormSubmit =  (e) => {
     e.preventDefault();
+
+    const formData = {
+        "expectedCollateral": expectedCollateral,
+        "durationInDays": durationInDays,
+        "installmentDuration": installmentDuration,
+        "interestRate": interestRate,
+        "amountPayable": amountPayable,
+        "agreeTerms": agreeTerms,
+        "hashId": hashId
+      };
+
+      uploadData(JSON.stringify(formData));
+      addItem();
+    
+      
     console.log('Duration in Days:', durationInDays);
     console.log('Installment Duration:', installmentDuration);
     console.log('Interest Rate:', interestRate);
     console.log('Amount Payable:', amountPayable);
     console.log('Agree to Terms:', agreeTerms);
   };
+
+  async function uploadData( formData ) {
+    const uploadResponse = await lighthouse.uploadText(formData, apiKey);
+    console.log(uploadResponse)
+  }
   
 
   return (
