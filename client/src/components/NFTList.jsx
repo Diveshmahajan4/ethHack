@@ -17,7 +17,7 @@ const NFTList = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-        const response = await axios.get('http://localhost:5100/fetchNfts', {
+        const response = await axios.get('http://localhost:5000/fetchNfts', {
             params: {
               // Add any query parameters if needed
             },
