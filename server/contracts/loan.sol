@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 import "abdk-libraries-solidity/ABDKMath64x64.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
@@ -149,17 +149,7 @@ contract EscrowLoan {
 
         emit LoanFunded(_loanId,msg.sender);
     }
-    
-    function cancelLoan(uint256 _loanId) external onlyBorrower(_loanId) {
-        Loan storage loan = loans[_loanId];
-        require(loan.status == LoanStatus.Open, "Can't cancel a loan with >0 bids");
 
-        IERC721(loan.tokenAddress).transferFrom(address(this), loan.borrower, loan.tokenId);
-
-        loan.status = LoanStatus.Complete;
-
-        emit LoanCancelled(_loanId);
-    }
     function repayLoan(uint256 _loanId, uint256 _amount) external payable onlyBorrower(_loanId) {
         Loan storage loan = loans[_loanId];
         require(loan.status == LoanStatus.Funded || loan.status == LoanStatus.Repayment, "Loan not in repayment phase");
@@ -216,5 +206,5 @@ contract EscrowLoan {
         IERC721(loan.tokenAddress).transferFrom(address(this), loan.lender, loan.tokenId);
 
         emit NFTSeized(_loanId, loan.lender, msg.sender);
-    }
+        }
 }
