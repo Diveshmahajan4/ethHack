@@ -44,6 +44,7 @@ contract EscrowLoan {
     event LoanDefaulted(uint256 id);
     event LoanCancelled(uint256 id);
     event NFTSeized(uint256 id, address lender, address caller);
+    event InstallmentDue(uint256 indexed loanId, address borrower, uint256 remainingAmount, uint256 dueTimestamp);
 
     modifier onlyBorrower(uint256 _loanId) {
         require(loans[_loanId].borrower == msg.sender, "Not the borrower");
@@ -176,6 +177,18 @@ contract EscrowLoan {
             loan.status = LoanStatus.Complete;
             emit LoanComplete(_loanId);
         }
+    }
+
+    function notifyInstallmentDue(uint256 _loanId) external onlyBorrower(_loanId) onlyRepaymentLoan(_loanId) 
+    {
+    Loan storage loan = loans[_loanId];
+    
+    require(block.timestamp > loan.lastInstallmentTime + loan.installmentPeriod, "Installment not yet due");
+
+    uint256 totalInterest = calculateTotalInterest(_loanId, 0);
+    uint256 remainingAmount = loan.loanAmountDrawn + totalInterest;
+    require(remainingAmount > 0, "Remaining amount is zero");
+    emit InstallmentDue(_loanId,loan.borrower, remainingAmount, loan.lastInstallmentTime + loan.installmentPeriod);
     }
 
     function calculateTotalInterest(uint256 _loanId, uint256 _future) public view returns (uint256) {
